@@ -13,3 +13,7 @@ nav a {
 nav a:hover {
     background: #dabe36;
 }
+
+.disabledInput:hover {
+    pointer-events: none;
+}
