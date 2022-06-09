@@ -13,3 +13,10 @@ nav a {
 nav a:hover {
     background: #dabe36;
 }
+
+.disabledInput:hover {
+    pointer-events: none;
+}
+table th td {
+    padding: 5px;
+}
