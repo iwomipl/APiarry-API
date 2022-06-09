@@ -1,0 +1,15 @@
+nav{
+    display: flex;
+}
+nav a {
+    display: block;
+    padding: 5px 10px;
+    margin: 5px;
+    background: #c9ae25;
+    border: 1px solid black;
+    border-radius: 2rem;
+    box-shadow: 0 0 10px black;
+}
+nav a:hover {
+    background: #dabe36;
+}
