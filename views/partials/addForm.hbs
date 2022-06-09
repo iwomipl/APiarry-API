@@ -1,5 +1,4 @@
-<h1></br>
-    Add your Apiary to the list</h1>
+<h1>Add your Apiary to the list</h1>
 <form action="/add" method="post">
     <label>
         Name of your Apiary:
@@ -9,12 +8,12 @@
     <label>
         Date:
         </br>
-        <input type="date" placeholder="{{this.date}}" name="date" value="{{this.date}}" readonly class="disabledInput">
+        <input type="date" placeholder="{{this.startTime}}" name="startTime" value="{{this.startTime}}" readonly class="disabledInput">
     </label></br>
     <label>
         Your Apiary Number:
         </br>
-        <input type="number" placeholder="{{this.number}}" name="number" value="{{this.number}}" minlength="5" maxlength="5" required>
+        <input type="number" placeholder="{{this.dailyNumber}}" name="dailyNumber" value="{{this.dailyNumber}}" minlength="5" maxlength="5" required>
     </label></br>
     <button type="submit">Add</button>
 </form>

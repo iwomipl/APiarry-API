@@ -4,17 +4,23 @@
 <table>
     <thead>
         <tr>
-            <th>name:</th>
-            <th>date:</th>
-            <th>number:</th>
+            <th>Id:</th>
+            <th>Name:</th>
+            <th>Control sum:</th>
+            <th>Your number:</th>
+            <th>Start Date:</th>
         </tr>
     </thead>
     <tbody>
+{{#each allApiaries}}
     <tr>
-        <td>First Hive</td>
-        <td>2022-02-20</td>
-        <td>2022060900002708</td>
+        <td>{{this.id}}</td>
+        <td>{{this.name}}</td>
+        <td>{{this.controlSum}}</td>
+        <td>{{oneToMoreDigits this.dailyNumber}}</td>
+        <td>{{this.startTime}}</td>
     </tr>
+{{/each}}
     </tbody>
 </table>
 </div>
