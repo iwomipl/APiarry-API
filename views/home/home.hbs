@@ -1,6 +1,6 @@
 <hr>
 <h3>Check our list of Apiarries!</h3>
-<form action="/" method="post" class="datePicker">
+<form action="/" method="get" class="datePicker">
     <label>
         Date from:
         <input id="dateFrom" type="date" name="dateFrom" value="{{findMin allApiaries}}">
@@ -15,17 +15,20 @@
 
         const resetValues = ()=> {
             dateTo.min = dateFrom.value;
+            dateTo.max = new Date().toLocaleDateString('sv');
+            dateFrom.max = new Date().toLocaleDateString('sv');
         }
         resetValues();
         dateFrom.addEventListener('change', (e)=>{
             if (e.target.value > dateTo.value){
                 dateTo.value = e.target.value;
-                dateTo.min = dateFrom.value;
             }
+            dateTo.min = e.target.value;
         });
         dateTo.addEventListener('change', (e)=>{
             if (e.target.value < dateFrom.value){
                 dateFrom.value = e.target.value;
+                dateTo.min = dateFrom.value;
             }
         });
 

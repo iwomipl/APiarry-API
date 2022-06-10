@@ -53,14 +53,19 @@ export class ApiaryRecord {
 
     }
     //Get list of all apiaries
-    static async listAll(): Promise<ApiaryRecord[]> {
+    static async listAll(dateFrom?: string, dateTo?: string): Promise<ApiaryRecord[]> {
         const [results] = await pool.execute('SELECT * FROM `apiaries`', ) as ApiaryRecordResults;
-
-        return results.map(apiary=> new ApiaryRecord({
+        const mappedResults = results.map(apiary=> new ApiaryRecord({
             ...apiary,
             startTime: new Date(apiary.startTime).toLocaleDateString('sv'),
             dailyNumber: apiary.dailyNumber ,
         }));
+        if (dateFrom || dateTo){
+            return mappedResults.filter(apiary=> {
+                return (new Date(apiary.startTime) >= new Date(dateFrom) && new Date(apiary.startTime) <= new Date(dateTo))
+            })
+        }
+        return mappedResults;
     }
 
     static async checkIfIdExistsInDataBase(controlSum: string): Promise<Boolean>{

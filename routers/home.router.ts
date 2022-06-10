@@ -8,9 +8,19 @@ export const homeRouter = Router();
 
 homeRouter
     .get('/', async (req, res) => {
-        const allApiaries = await ApiaryRecord.listAll();
+        const {dateFrom, dateTo} = req.query;
+        if (dateFrom || dateTo){
+            if (!dateFrom || !dateTo){
+                throw new ValidationError(`There must be two date from and to what date.`)
+            }
+            const allApiaries = await ApiaryRecord.listAll(dateFrom.toString(), dateTo.toString());
 
-        res.render('home/home', {allApiaries});
+            res.render('home/home', {allApiaries});
+        } else {
+            const allApiaries = await ApiaryRecord.listAll();
+
+            res.render('home/home', {allApiaries});
+        }
     })
     .get('/add', async (req, res) => {
         const startTime = new Date().toLocaleDateString('sv');
