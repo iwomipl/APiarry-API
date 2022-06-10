@@ -3,36 +3,12 @@
 <form action="/" method="get" class="datePicker">
     <label>
         Date from:
-        <input id="dateFrom" type="date" name="dateFrom" value="{{findMin allApiaries}}">
+        <input id="dateFrom" type="date" name="dateFrom" {{#if (checkIfListExists allApiaries)}}value="{{findMin allApiaries}}"{{/if}}>
     </label>
     <label>
         Date to:
-        <input id="dateTo" type="date" name="dateTo" value="{{findMax allApiaries}}">
+        <input id="dateTo" type="date" name="dateTo" {{#if (checkIfListExists allApiaries)}}value="{{findMax allApiaries}}"{{/if}}>
     </label>
-    <script>
-        const dateFrom = document.getElementById('dateFrom');
-        const dateTo = document.getElementById('dateTo');
-
-        const resetValues = ()=> {
-            dateTo.min = dateFrom.value;
-            dateTo.max = new Date().toLocaleDateString('sv');
-            dateFrom.max = new Date().toLocaleDateString('sv');
-        }
-        resetValues();
-        dateFrom.addEventListener('change', (e)=>{
-            if (e.target.value > dateTo.value){
-                dateTo.value = e.target.value;
-            }
-            dateTo.min = e.target.value;
-        });
-        dateTo.addEventListener('change', (e)=>{
-            if (e.target.value < dateFrom.value){
-                dateFrom.value = e.target.value;
-                dateTo.min = dateFrom.value;
-            }
-        });
-
-    </script>
     <button type="submit">Filter dates</button>
 </form>
 <div class="wrapper">
@@ -40,7 +16,7 @@
 <table>
     <thead>
         <tr>
-            <th><a href="/">Id: <strong>&#8597</strong><strong>&#8593</strong><strong>&#8595</strong></a></th>
+            <th><a href="/" id="direction">Id: <strong>&#8597</strong><strong>&#8593</strong><strong>&#8595</strong></a></th>
             <th>Name:</th>
             <th>Control sum:</th>
             <th>Your number:</th>
@@ -65,3 +41,28 @@
 </div>
 {{>jokeOnTheEnd}}
 
+    <script>
+        const dateFrom = document.getElementById('dateFrom');
+        const dateTo = document.getElementById('dateTo');
+        const direction = document.getElementById('direction');
+
+        const resetValues = ()=> {
+            dateTo.min = dateFrom.value;
+            dateTo.max = new Date().toLocaleDateString('sv');
+            dateFrom.max = new Date().toLocaleDateString('sv');
+        }
+        resetValues();
+        dateFrom.addEventListener('change', (e)=>{
+            if (e.target.value > dateTo.value){
+                dateTo.value = e.target.value;
+            }
+            dateTo.min = e.target.value;
+        });
+        dateTo.addEventListener('change', (e)=>{
+            if (e.target.value < dateFrom.value){
+                dateFrom.value = e.target.value;
+                dateTo.min = dateFrom.value;
+            }
+        });
+
+    </script>
