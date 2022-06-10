@@ -1,27 +1,94 @@
 <hr>
-<h3>Check our list of Apiarries!</h3>
+<h3>Check our list of Apiaries!</h3>
+<form action="/" method="get" id="datePicker" onsubmit="submitter()">
+    <label>
+        Date from:
+        <input id="dateFrom" type="date" name="dateFrom"
+               {{#if (checkIfListExists allApiaries)}}value="{{#if (minOrMax allApiaries)}}{{findMin
+                       allApiaries}}{{else}}{{findMax allApiaries}}{{/if}}"{{/if}}>
+    </label>
+    <label>
+        Date to:
+        <input id="dateTo" type="date" name="dateTo"
+               {{#if (checkIfListExists allApiaries)}}value="{{#if (minOrMax allApiaries)}}{{findMax
+                       allApiaries}}{{else}}{{findMin allApiaries}}{{/if}}"{{/if}}>
+    </label>
+    <input id="direction" type="text" name="direction" class="invisible" value="{{direction}}"/>
+    <button type="submit">Filter dates</button>
+</form>
 <div class="wrapper">
-<table>
-    <thead>
-        <tr>
-            <th>Id:</th>
-            <th>Name:</th>
-            <th>Control sum:</th>
-            <th>Your number:</th>
-            <th>Start Date:</th>
-        </tr>
-    </thead>
-    <tbody>
-{{#each allApiaries}}
-    <tr>
-        <td>{{this.id}}</td>
-        <td>{{this.name}}</td>
-        <td>{{this.controlSum}}</td>
-        <td>{{oneToMoreDigits this.dailyNumber}}</td>
-        <td>{{this.startTime}}</td>
-    </tr>
-{{/each}}
-    </tbody>
-</table>
+    {{#if (checkIfListExists allApiaries)}}
+        <table>
+            <thead>
+            <tr>
+                <th>
+                    <button id="direct" type="submit" form="datePicker">Id:</button>
+                </th>
+                <th>Name:</th>
+                <th>Control sum:</th>
+                <th>Your number:</th>
+                <th>Start Date:</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each allApiaries}}
+                <tr>
+                    <td>{{this.id}}</td>
+                    <td>{{this.name}}</td>
+                    <td>{{this.controlSum}}</td>
+                    <td>{{oneToMoreDigits this.dailyNumber}}</td>
+                    <td>{{this.startTime}}</td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    {{else}}
+        <h3>Sorry no Apiaries on the list</h3>
+    {{/if}}
 </div>
+{{>jokeOnTheEnd}}
 
+<script>
+    const dateFrom = document.getElementById('dateFrom');
+    const dateTo = document.getElementById('dateTo');
+    const direction = document.getElementById('direct');
+    const form = document.querySelector('form');
+    const directionInput = document.getElementById('direction');
+
+
+    const resetValues = () => {
+        dateTo.min = dateFrom.value;
+        dateTo.max = new Date().toLocaleDateString('sv');
+        dateFrom.max = new Date().toLocaleDateString('sv');
+    }
+    resetValues();
+    submitter = () => {
+        const newForm = document.querySelector('form');
+
+        console.log('newForm ', newForm.attributes.action.value)
+        console.log('after ', form.action);
+        // newForm.submit();
+        console.log(form.attributes.action.value)
+        // debugger
+        console.log(form.attributes.action.value)
+    }
+    dateFrom.addEventListener('change', (e) => {
+        if (e.target.value > dateTo.value) {
+            dateTo.value = e.target.value;
+        }
+        dateTo.min = e.target.value;
+    });
+    dateTo.addEventListener('change', (e) => {
+        if (e.target.value < dateFrom.value) {
+            dateFrom.value = e.target.value;
+            dateTo.min = dateFrom.value;
+        }
+    });
+    direction.addEventListener('click', async () => {
+        const directionInput = document.getElementById('direction');
+        form.method = 'POST';
+        directionInput.setAttribute('value', directionInput.value === '8595' ? '8593': '8595') ;
+        form.submit()
+    })
+
+</script>

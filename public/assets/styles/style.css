@@ -1,5 +1,17 @@
+body{
+    margin: 0;
+    text-align: center;
+    top: 0;
+}
+main{
+    position: relative;
+    margin: auto;
+    text-align: center;
+    min-height: 100vh;
+}
 nav{
     display: flex;
+    justify-content: center;
 }
 nav a {
     display: block;
@@ -17,6 +29,53 @@ nav a:hover {
 .disabledInput:hover {
     pointer-events: none;
 }
-table th td {
-    padding: 5px;
+td {
+    border: 1px solid black;
+    padding: 0 15px;
+}
+th {
+    border: 1px solid black;
+}
+table a{
+    display: block;
+    padding: 15px;
+    background-color: #c9ae25;
+    text-decoration: none;
+}
+table {
+    border-spacing: 0;
+    padding: 10px;
+}
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+.wrapper:first-child {
+    flex: 0 1 100%;
+}
+small{
+    font-size: 0.8rem;
+}
+tiny{
+    font-size: 0.6rem;
+}
+smallest{
+    font-size: 0.5rem;
+}
+#direct{
+    display: block;
+    width: 100%;
+    background-color: #c9ae25;
+    text-decoration: none;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+.invisible{
+    visibility: hidden;
+    width: 0;
+    height: 0;
+    margin-top: -1rem;
 }

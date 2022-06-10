@@ -7,11 +7,6 @@ import {ValidationError} from "../utils/errors";
 export const homeRouter = Router();
 
 homeRouter
-    .get('/', async (req, res) => {
-        const allApiaries = await ApiaryRecord.listAll();
-
-        res.render('home/home', {allApiaries});
-    })
     .get('/add', async (req, res) => {
         const startTime = new Date().toLocaleDateString('sv');
         const dailyNumber = await ApiaryRecord.getFirstPossibleNumberForTheDay(new Date(startTime));
@@ -21,9 +16,29 @@ homeRouter
             dailyNumber,
         })
     })
+    .get('/', async (req, res) => {
+        const {dateFrom, dateTo, direction} = req.query;
+        if (dateFrom || dateTo){
+            if (!dateFrom || !dateTo){
+                throw new ValidationError(`There must be two date from and to what date.`)
+            }
+            const allApiaries = await ApiaryRecord.listAll(dateFrom.toString(), dateTo.toString());
+            res.render('home/home', {
+                allApiaries,
+                direction: direction ?? '8595',
+            });
+        } else {
+            const allApiaries = await ApiaryRecord.listAll();
+
+            res.render('home/home', {
+                allApiaries,
+                direction: direction ?? '8595',
+            });
+        }
+    })
     .post('/add', async (req, res) => {
         const {name, dailyNumber, startTime} = req.body;
-        if (ApiaryRecord._validate(name, dailyNumber)){
+        if (ApiaryRecord._validate(name, dailyNumber, startTime)){
             throw new ValidationError(`Sorry, somethings wrong with your inputs.`);
         }
 
@@ -43,6 +58,26 @@ homeRouter
             dailyNumber,
             startTime,
         })
+    })
+    .post('/', async (req, res) => {
+        const {dateFrom, dateTo, direction} = req.body;
+        if (dateFrom || dateTo){
+            if (!dateFrom || !dateTo){
+                throw new ValidationError(`There must be two date from and to what date.`)
+            }
+            const allApiaries = await ApiaryRecord.listAll(dateFrom.toString(), dateTo.toString());
+            res.render('home/home', {
+                allApiaries: direction === '8593'? allApiaries.sort((a,b)=> Number(b.id) - Number(a.id)) : allApiaries,
+                direction,
+            });
+        } else {
+            const allApiaries = await ApiaryRecord.listAll();
+
+            res.render('home/home', {
+                allApiaries: direction === '8593'? allApiaries.sort((a,b)=> Number(b.id) - Number(a.id)) : allApiaries,
+                direction,
+            });
+        }
     })
 
 //@TODO add sorting and filtering options to homeRouter and apiary . record

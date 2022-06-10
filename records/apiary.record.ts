@@ -26,12 +26,15 @@ export class ApiaryRecord {
         this.controlSum = controlSum;
     }
 
-    static _validate(name: string, dailyNumber: string): Boolean{
+    static _validate(name: string, dailyNumber: string, startTime: string): Boolean{
         if ((dailyNumber).toString().length >5 || isNaN(Number(dailyNumber))){
             throw new ValidationError('Sorry, Your number should be digits only and be  5 digits long.');
         }
         if (name.length < 3 || name.length >50 ){
             throw new ValidationError(`Sorry, Your Apiary's name  should be from 3 to 50 characters long.`);
+        }
+        if (startTime !== new Date().toLocaleDateString('sv')){
+            throw new ValidationError(`Sorry, given date is not today. It should be date of adding apiary to our list.`);
         }
         return false;
     }
@@ -50,14 +53,19 @@ export class ApiaryRecord {
 
     }
     //Get list of all apiaries
-    static async listAll(): Promise<ApiaryRecord[]> {
+    static async listAll(dateFrom?: string, dateTo?: string): Promise<ApiaryRecord[]> {
         const [results] = await pool.execute('SELECT * FROM `apiaries`', ) as ApiaryRecordResults;
-
-        return results.map(apiary=> new ApiaryRecord({
+        const mappedResults = results.map(apiary=> new ApiaryRecord({
             ...apiary,
             startTime: new Date(apiary.startTime).toLocaleDateString('sv'),
             dailyNumber: apiary.dailyNumber ,
         }));
+        if (dateFrom || dateTo){
+            return mappedResults.filter(apiary=> {
+                return (new Date(apiary.startTime) >= new Date(dateFrom) && new Date(apiary.startTime) <= new Date(dateTo))
+            })
+        }
+        return mappedResults;
     }
 
     static async checkIfIdExistsInDataBase(controlSum: string): Promise<Boolean>{
