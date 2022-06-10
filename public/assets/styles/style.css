@@ -29,12 +29,41 @@ nav a:hover {
 .disabledInput:hover {
     pointer-events: none;
 }
-th, td {
-    padding: 15px;
+td {
     border: 1px solid black;
-    margin: 0;
+    padding: 0 15px;
+}
+th {
+    border: 1px solid black;
+}
+table a{
+    display: block;
+    padding: 15px;
+    background-color: #c9ae25;
+    text-decoration: none;
+}
+table {
+    border-spacing: 0;
+    padding: 10px;
 }
 .wrapper {
     display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     justify-content: center;
+}
+.wrapper:first-child {
+    flex: 0 1 100%;
+}
+.datePicker {
+    display: block;
+}
+small{
+    font-size: 0.8rem;
+}
+tiny{
+    font-size: 0.6rem;
+}
+smallest{
+    font-size: 0.5rem;
 }

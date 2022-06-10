@@ -23,7 +23,7 @@ homeRouter
     })
     .post('/add', async (req, res) => {
         const {name, dailyNumber, startTime} = req.body;
-        if (ApiaryRecord._validate(name, dailyNumber)){
+        if (ApiaryRecord._validate(name, dailyNumber, startTime)){
             throw new ValidationError(`Sorry, somethings wrong with your inputs.`);
         }
 

@@ -1,10 +1,43 @@
 <hr>
 <h3>Check our list of Apiarries!</h3>
+<form action="/" method="post" class="datePicker">
+    <label>
+        Date from:
+        <input id="dateFrom" type="date" name="dateFrom" value="{{findMin allApiaries}}">
+    </label>
+    <label>
+        Date to:
+        <input id="dateTo" type="date" name="dateTo" value="{{findMax allApiaries}}">
+    </label>
+    <script>
+        const dateFrom = document.getElementById('dateFrom');
+        const dateTo = document.getElementById('dateTo');
+
+        const resetValues = ()=> {
+            dateTo.min = dateFrom.value;
+        }
+        resetValues();
+        dateFrom.addEventListener('change', (e)=>{
+            if (e.target.value > dateTo.value){
+                dateTo.value = e.target.value;
+                dateTo.min = dateFrom.value;
+            }
+        });
+        dateTo.addEventListener('change', (e)=>{
+            if (e.target.value < dateFrom.value){
+                dateFrom.value = e.target.value;
+            }
+        });
+
+    </script>
+    <button type="submit">Filter dates</button>
+</form>
 <div class="wrapper">
+    {{#if (checkIfListExists allApiaries)}}
 <table>
     <thead>
         <tr>
-            <th>Id:</th>
+            <th><a href="/">Id: <strong>&#8597</strong><strong>&#8593</strong><strong>&#8595</strong></a></th>
             <th>Name:</th>
             <th>Control sum:</th>
             <th>Your number:</th>
@@ -23,5 +56,9 @@
 {{/each}}
     </tbody>
 </table>
+    {{else}}
+        <h3>Sorry no Apiaries on the list</h3>
+    {{/if}}
 </div>
+{{>jokeOnTheEnd}}
 
