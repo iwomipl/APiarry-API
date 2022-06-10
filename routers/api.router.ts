@@ -3,8 +3,11 @@ import {createApiaryIdNumber} from "../utils/functions";
 import {ApiaryRecord} from "../records/apiary.record";
 import {ValidationError} from "../utils/errors";
 
-
 export const apiRouter = Router();
+type QueryData = {
+    name: string;
+    dailyNumber: string;
+}
 
 apiRouter
     .get('/list', async (req, res) => {
@@ -12,12 +15,37 @@ apiRouter
 
         res.json(allApiaries);
     })
-    .post('/add', async (req, res) => {
-        const {name, dailyNumber, startTime} = req.body;
+    .post('/json/add', async (req, res) => {
+        const {name, dailyNumber} = req.body as QueryData;
+        const startTime = new Date().toLocaleDateString('sv');
         if (ApiaryRecord._validate(name, dailyNumber, startTime)) {
-            throw new ValidationError(`Sorry, somethings wrong with your inputs.`);
+            throw new ValidationError(`Sorry, somethings wrong with your query. Check it and try again.`);
         }
-        //@TODO change body to params or queries in url
+
+        const fixDateDash = startTime.split('-').join('');
+        const {id, controlSum} = createApiaryIdNumber(fixDateDash, dailyNumber);
+
+        if (await ApiaryRecord.checkIfIdExistsInDataBase(id)) {
+            throw new ValidationError('Sorry, the Apiary Number you choose was already chosen today. Try again with different number.')
+        }
+        const newApiary = new ApiaryRecord({id, name, controlSum, dailyNumber, startTime})
+        await newApiary.insert();
+
+        res.json({
+            name,
+            id,
+            controlSum,
+            dailyNumber,
+            startTime,
+        })
+    })
+    .post('/query/add', async (req, res) => {
+        const {name, dailyNumber} = req.query as QueryData;
+        const startTime = new Date().toLocaleDateString('sv');
+        if (ApiaryRecord._validate(name, dailyNumber, startTime)) {
+            throw new ValidationError(`Sorry, somethings wrong with your query. Check it and try again.`);
+        }
+
         const fixDateDash = startTime.split('-').join('');
         const {id, controlSum} = createApiaryIdNumber(fixDateDash, dailyNumber);
 

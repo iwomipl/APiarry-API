@@ -27,7 +27,7 @@ export class ApiaryRecord {
     }
 
     static _validate(name: string, dailyNumber: string, startTime: string): Boolean{
-        if ((dailyNumber).toString().length >5 || isNaN(Number(dailyNumber))){
+        if ((dailyNumber).toString().length <5 || (dailyNumber).toString().length >5|| isNaN(Number(dailyNumber))){
             throw new ValidationError('Sorry, Your number should be digits only and be  5 digits long.');
         }
         if (name.length < 3 || name.length >50 ){
