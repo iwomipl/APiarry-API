@@ -2,6 +2,7 @@ body{
     margin: 0;
     text-align: center;
     top: 0;
+    background-color: #eabe36;
 }
 main{
     position: relative;
@@ -21,11 +22,14 @@ nav a {
     border: 1px solid black;
     border-radius: 2rem;
     box-shadow: 0 0 10px black;
+    font-weight: bolder;
+    text-decoration: none;
+    color: black;
+    text-shadow: 1px 1px 3px white;
 }
 nav a:hover {
     background: #dabe36;
 }
-
 .disabledInput:hover {
     pointer-events: none;
 }
@@ -36,15 +40,16 @@ td {
 th {
     border: 1px solid black;
 }
-table a{
-    display: block;
-    padding: 15px;
-    background-color: #c9ae25;
-    text-decoration: none;
-}
 table {
     border-spacing: 0;
     padding: 10px;
+    margin: 0 auto;
+}
+thead{
+    background-color: white;
+}
+tbody>tr:nth-child(2n+2){
+    background-color: white;
 }
 .wrapper {
     display: flex;
@@ -67,15 +72,28 @@ smallest{
 #direct{
     display: block;
     width: 100%;
-    background-color: #c9ae25;
+    background-color: #967b12;
     text-decoration: none;
     border: none;
     padding: 10px;
     cursor: pointer;
+    color: white;
+    text-shadow: 1px 1px 3px black;
 }
 .invisible{
     visibility: hidden;
     width: 0;
     height: 0;
     margin-top: -1rem;
+}
+input{
+    background-color: #eabe36;
+    color: black;
+    font-weight: bolder;
+    margin-bottom: 0.5rem;
+}
+button {
+    background-color: #967b12;
+    color: white;
+    text-shadow: 1px 1px 3px black;
 }

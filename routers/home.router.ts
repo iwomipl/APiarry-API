@@ -16,11 +16,17 @@ homeRouter
             dailyNumber,
         })
     })
+    .get('/admin', async (req, res) => {
+        res.render('admin/admin');
+    })
     .get('/', async (req, res) => {
         const {dateFrom, dateTo, direction} = req.query;
         if (dateFrom || dateTo){
             if (!dateFrom || !dateTo){
                 throw new ValidationError(`There must be two date from and to what date.`)
+            }
+            if (dateFrom > dateTo){
+                throw new ValidationError(`Date From must be equal od earlier than Date To.`)
             }
             const allApiaries = await ApiaryRecord.listAll(dateFrom.toString(), dateTo.toString());
             res.render('home/home', {

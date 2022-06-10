@@ -48,10 +48,6 @@ export class ApiaryRecord {
         return this.id;
     }
 
-    //delete apiary from database
-    async delete(): Promise<void> {
-
-    }
     //Get list of all apiaries
     static async listAll(dateFrom?: string, dateTo?: string): Promise<ApiaryRecord[]> {
         const [results] = await pool.execute('SELECT * FROM `apiaries`', ) as ApiaryRecordResults;
