@@ -1,5 +1,17 @@
+body{
+    margin: 0;
+    text-align: center;
+    top: 0;
+}
+main{
+    position: relative;
+    margin: auto;
+    text-align: center;
+    min-height: 100vh;
+}
 nav{
     display: flex;
+    justify-content: center;
 }
 nav a {
     display: block;
@@ -17,6 +29,12 @@ nav a:hover {
 .disabledInput:hover {
     pointer-events: none;
 }
-table th td {
-    padding: 5px;
+th, td {
+    padding: 15px;
+    border: 1px solid black;
+    margin: 0;
+}
+.wrapper {
+    display: flex;
+    justify-content: center;
 }
