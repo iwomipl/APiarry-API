@@ -1,0 +1,86 @@
+<hr>
+<div id="wrapper">
+    <h1>Welcome!</h1>
+    <p>I created this site, to explain few things, about the way it works.</p>
+    <h2>Webpage</h2>
+    <p>Webpage is simply and, you should not have problems using it. If something goes wrong, error should explain what
+        happened, and what to do, to make it work.</p>
+    <h4>Home Page</h4>
+    <p>You can find a list of stored apiaries in there. You can click on the id button to sort apiaries by their id
+        numbers.</p>
+    <p>You can also change the range of apiaries in the list by the date of their start.</p>
+    <h4>Home Page</h4>
+    <p>Here you can add Apiaries to the list</p>
+    <p>In the first input you need to write your apiary name.</p>
+    <p>Second input is not editable, and this is the date of adding apiary.</p>
+    <p>Third input is suggested apiary number. It is restarted every day, and it's first consecutive number of apiary in
+        database on given date.</p>
+    <p>You can change third input, and choose your own number.</p>
+
+    <h2>API</h2>
+    <p>That is a whole different story.</p>
+    <h3>Adding new Apiary</h3>
+    <p>You can always add new apiary via API.</p>
+    <p>You just need to send JSON file in the body of request with "POST" method. JSON file should have two variables:</p>
+    <p>"name" that should be a string - and is your Apiary name</p>
+    <p>"dailyNumber" that should be a number - and is chosen by you Apiary 5 digit number</p>
+
+    <h4>You need to send request to following url:</h4>
+    <table>
+        <thead>
+        <tr>
+            <th>It's easy, you just need to create a url with following parameters:</th>
+        </tr>
+        </thead>
+        <tr>
+            <td>Host name of server wrapped in http protocol. On Local computer it's:
+                <strong>"http://localhost:3000/"</strong></td>
+        </tr>
+        <tr>
+            <td>Path to router serving API, it's: <strong>"api/json/add/"</strong></td>
+        </tr>
+
+    </table>
+    <p>Full url for local computer should look like this</p>
+    <p><strong>http://localhost:3000/api/json/add/</strong></p>
+    <p>Example JSON file, for name "Miodek Gąski Balbinki", and number "12345" looks like this:</p>
+    <p>{"name": "Miodek Gąski Balbinki", "dailyNumber": "12345"}</p>
+
+    <h3>List of Apiaries</h3>
+    <p>You can get list of Apiaries with a method "GET" or via browser.</p>
+    <p>You can get data of every Apiary in our Database, or get only those between sent dates.</p>
+    <p>But how to send dates to API?</p>
+    <h4>You need to send request to following url:</h4>
+    <table>
+        <thead>
+        <tr>
+            <th>It's easy, you just need to create a url with following parameters:</th>
+        </tr>
+        </thead>
+        <tr>
+            <td>Host name of server wrapped in http protocol. On Local computer it's:
+                <strong>"http://localhost:3000/"</strong></td>
+        </tr>
+        <tr>
+            <td>Path to router serving API, it's: <strong>"api/list/"</strong></td>
+        </tr>
+        <tr>
+            <td>If You are interested in getting list of all Apiaries. This is full url. But if you want to shorten range of Apiaries, add next steps. </td>
+        </tr>
+        <tr>
+            <td>Date From which Apiaries were added preceded by question mark "?", and query string "dateFrom=". Date should be in YYYY-MM-DD format.  For "2022-06-09" it's: <strong>"?dateFrom=2022-06-09"</strong></td>
+        </tr>
+        <tr>
+            <td>Date To which Apiaries were added preceded by ampersand "&", and query string "dateTo=". Date should be in YYYY-MM-DD format.  For "2022-06-10" it's: <strong>"&dateTo=2022-06-10"</strong></td>
+        </tr>
+    </table>
+    <p>Full url for local computer to get list of all Apiaries should look like that:</p>
+    <p><strong>http://localhost:3000/api/list/</strong></p>
+
+    <p>Full url for local computer to get list of Apiaries added between "2022-06-09" and "2022-06-10" :</p>
+    <p><strong>http://localhost:3000/api/list/?dateFrom=2022-06-09&dateTo=2022-06-10</strong></p>
+    <h1>That's it, go waste your time.</h1>
+    <h3>...or set record in bee Apiaries adding competition.</h3>
+</div>
+
+{{>jokeOnTheEnd}}

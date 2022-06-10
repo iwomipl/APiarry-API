@@ -24,7 +24,7 @@ app.engine('.hbs', engine({
 }));
 app.set('view engine', '.hbs');
 
-app.use('/json', apiRouter);
+app.use('/api/', apiRouter);
 app.use('/', homeRouter);
 
 app.use(handleError);

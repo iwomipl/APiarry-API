@@ -1,6 +1,6 @@
 <hr>
 <h3>Check our list of Apiaries!</h3>
-<form action="/" method="get" id="datePicker" onsubmit="submitter()">
+<form action="/" method="get" id="datePicker">
     <label>
         Date from:
         <input id="dateFrom" type="date" name="dateFrom"
@@ -62,16 +62,6 @@
         dateFrom.max = new Date().toLocaleDateString('sv');
     }
     resetValues();
-    submitter = () => {
-        const newForm = document.querySelector('form');
-
-        console.log('newForm ', newForm.attributes.action.value)
-        console.log('after ', form.action);
-        // newForm.submit();
-        console.log(form.attributes.action.value)
-        // debugger
-        console.log(form.attributes.action.value)
-    }
     dateFrom.addEventListener('change', (e) => {
         if (e.target.value > dateTo.value) {
             dateTo.value = e.target.value;
@@ -88,7 +78,6 @@
         const directionInput = document.getElementById('direction');
         form.method = 'POST';
         directionInput.setAttribute('value', directionInput.value === '8595' ? '8593': '8595') ;
-        form.submit()
     })
 
 </script>

@@ -27,7 +27,7 @@ export class ApiaryRecord {
     }
 
     static _validate(name: string, dailyNumber: string, startTime: string): Boolean{
-        if ((dailyNumber).toString().length >5 || isNaN(Number(dailyNumber))){
+        if ((dailyNumber).toString().length <5 || (dailyNumber).toString().length >5|| isNaN(Number(dailyNumber))){
             throw new ValidationError('Sorry, Your number should be digits only and be  5 digits long.');
         }
         if (name.length < 3 || name.length >50 ){
@@ -48,10 +48,6 @@ export class ApiaryRecord {
         return this.id;
     }
 
-    //delete apiary from database
-    async delete(): Promise<void> {
-
-    }
     //Get list of all apiaries
     static async listAll(dateFrom?: string, dateTo?: string): Promise<ApiaryRecord[]> {
         const [results] = await pool.execute('SELECT * FROM `apiaries`', ) as ApiaryRecordResults;
