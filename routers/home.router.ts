@@ -1,7 +1,7 @@
 import {Router} from "express";
-import {createApiaryIdNumber} from "../utils/functions";
 import {ApiaryRecord} from "../records/apiary.record";
 import {ValidationError} from "../utils/errors";
+import {createCheckAndInsertNewApiary, validateDatesFromAndTo} from "../utils/functions-antiredundant";
 
 
 export const homeRouter = Router();
@@ -21,14 +21,16 @@ homeRouter
     })
     .get('/', async (req, res) => {
         const {dateFrom, dateTo, direction} = req.query;
+
         if (dateFrom || dateTo){
-            if (!dateFrom || !dateTo){
-                throw new ValidationError(`There must be two date from and to what date.`)
-            }
-            if (dateFrom > dateTo){
-                throw new ValidationError(`Date From must be equal od earlier than Date To.`)
-            }
+            // first check, if we have good dates
+            validateDatesFromAndTo(dateFrom as string, dateTo as string);
+
+            //if we have dates, let's grab Apiaries
             const allApiaries = await ApiaryRecord.listAll(dateFrom.toString(), dateTo.toString());
+
+
+            //On frontend I have function that checks direction of tablerows by id, here i'm checking if it is set, if not, i'm setting it
             res.render('home/home', {
                 allApiaries,
                 direction: direction ?? '8595',
@@ -43,19 +45,14 @@ homeRouter
         }
     })
     .post('/add', async (req, res) => {
-        const {name, dailyNumber, startTime} = req.body;
+        const {name, dailyNumber} = req.body;
+
+        //would have brought creating this variable to createCheckAndInsertNewApiary, but i need it to be _validated
+        const startTime = new Date().toLocaleDateString('sv');
         if (ApiaryRecord._validate(name, dailyNumber, startTime)){
             throw new ValidationError(`Sorry, somethings wrong with your inputs.`);
         }
-
-        const fixDateDash = startTime.split('-').join('');
-        const {id, controlSum} = createApiaryIdNumber(fixDateDash, dailyNumber);
-
-        const newApiary = new ApiaryRecord({id, name, controlSum, dailyNumber, startTime})
-        if (await ApiaryRecord.checkIfIdExistsInDataBase(id)){
-            throw new ValidationError('Sorry, the Apiary number you choose was already chosen today. Try again with different number.')
-        }
-        await newApiary.insert();
+        const {id, controlSum } = await createCheckAndInsertNewApiary(startTime, dailyNumber, name);
 
         res.render('add/added', {
             name,
@@ -85,5 +82,3 @@ homeRouter
             });
         }
     })
-
-//@TODO add sorting and filtering options to homeRouter and apiary . record
