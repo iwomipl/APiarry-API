@@ -9,7 +9,8 @@ It's your choice to pick one that you prefer.
 After copying and starting db, it's only few steps to start the App:
 1- clone this repository;
 2- install needed dependencies "npm i "
-3- start the application "npm run start:dev" or "npm run start"
+3- create config.ts file, and fill it with information of your DB and server
+4- start the application "npm run start:dev" or "npm run start"
 
 
-Hive Fun!
+Hive Fun and Bee Happy!

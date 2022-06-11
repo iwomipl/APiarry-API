@@ -12,6 +12,7 @@ type QueryData = {
 apiRouter
     .get('/list', async (req, res) => {
         const {dateFrom, dateTo} = req.query;
+
         if (dateFrom || dateTo){
             // first check, if we have good dates
             validateDatesFromAndTo(dateFrom as string, dateTo as string);

@@ -12,23 +12,28 @@ import { apiRouter } from './routers/api.router';
 const local = `Listening on http://${config.serverHost}:${config.serverPort}`;
 const app = express();
 
-
+//Middlewares
 app.use(express.json())
 app.use(urlencoded({
     extended: true,
 }));
 app.use(eStatic('public'));
+//setting handlebars
 app.engine('.hbs', engine({
     extname: '.hbs',
     helpers: handlebarsHelpers,
 }));
 app.set('view engine', '.hbs');
 
+
+//routers
 app.use('/api/', apiRouter);
 app.use('/', homeRouter);
 
+
+//errors
 app.use(handleError);
-//błąd do obsługi 404
+//404 error
 app.use(handleFourOhFourError);
 
 app.listen(config.serverPort, config.serverHost, () => {
