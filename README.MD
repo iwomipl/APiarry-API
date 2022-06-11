@@ -12,9 +12,4 @@ After copying and starting db, it's only few steps to start the App:
 3- start the application "npm run start:dev" or "npm run start"
 
 
-But why bother. You can also check how does it work on my "Replit". The code is slightly diferent, and I will not refactor it anymore. So if you want to see clean, fresh code, github is your place, but if you want to check how does it look first, that's the place to visit. 
-Here's link:
-https://apiarry-api.iwomipl.repl.co/
-
-You might have to wait for a while, for it to start, but most functionalities should work nice.
-Also there's "Admin/Information" button on menu, where you can see detailed explanation for the app.
+Hive Fun!

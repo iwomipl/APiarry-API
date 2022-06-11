@@ -2,6 +2,7 @@ import {Router} from "express";
 import {createApiaryIdNumber} from "../utils/functions";
 import {ApiaryRecord} from "../records/apiary.record";
 import {ValidationError} from "../utils/errors";
+import {validateDatesFromAndTo} from "../utils/functions-antiredundant";
 
 
 export const homeRouter = Router();
@@ -22,12 +23,7 @@ homeRouter
     .get('/', async (req, res) => {
         const {dateFrom, dateTo, direction} = req.query;
         if (dateFrom || dateTo){
-            if (!dateFrom || !dateTo){
-                throw new ValidationError(`There must be two date from and to what date.`)
-            }
-            if (dateFrom > dateTo){
-                throw new ValidationError(`Date From must be equal od earlier than Date To.`)
-            }
+            validateDatesFromAndTo(dateFrom as string, dateTo as string);
             const allApiaries = await ApiaryRecord.listAll(dateFrom.toString(), dateTo.toString());
             res.render('home/home', {
                 allApiaries,
@@ -43,7 +39,8 @@ homeRouter
         }
     })
     .post('/add', async (req, res) => {
-        const {name, dailyNumber, startTime} = req.body;
+        const {name, dailyNumber} = req.body;
+        const startTime = new Date().toLocaleDateString('sv');
         if (ApiaryRecord._validate(name, dailyNumber, startTime)){
             throw new ValidationError(`Sorry, somethings wrong with your inputs.`);
         }
@@ -51,10 +48,10 @@ homeRouter
         const fixDateDash = startTime.split('-').join('');
         const {id, controlSum} = createApiaryIdNumber(fixDateDash, dailyNumber);
 
-        const newApiary = new ApiaryRecord({id, name, controlSum, dailyNumber, startTime})
         if (await ApiaryRecord.checkIfIdExistsInDataBase(id)){
             throw new ValidationError('Sorry, the Apiary number you choose was already chosen today. Try again with different number.')
         }
+        const newApiary = new ApiaryRecord({id, name, controlSum, dailyNumber, startTime})
         await newApiary.insert();
 
         res.render('add/added', {
