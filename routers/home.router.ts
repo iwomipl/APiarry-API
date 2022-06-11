@@ -1,8 +1,7 @@
 import {Router} from "express";
-import {createApiaryIdNumber} from "../utils/functions";
 import {ApiaryRecord} from "../records/apiary.record";
 import {ValidationError} from "../utils/errors";
-import {validateDatesFromAndTo} from "../utils/functions-antiredundant";
+import {createCheckAndInsertNewApiary, validateDatesFromAndTo} from "../utils/functions-antiredundant";
 
 
 export const homeRouter = Router();
@@ -40,19 +39,11 @@ homeRouter
     })
     .post('/add', async (req, res) => {
         const {name, dailyNumber} = req.body;
-        const startTime = new Date().toLocaleDateString('sv');
+        const startTime = new Date().toLocaleDateString('sv') as string;
         if (ApiaryRecord._validate(name, dailyNumber, startTime)){
             throw new ValidationError(`Sorry, somethings wrong with your inputs.`);
         }
-
-        const fixDateDash = startTime.split('-').join('');
-        const {id, controlSum} = createApiaryIdNumber(fixDateDash, dailyNumber);
-
-        if (await ApiaryRecord.checkIfIdExistsInDataBase(id)){
-            throw new ValidationError('Sorry, the Apiary number you choose was already chosen today. Try again with different number.')
-        }
-        const newApiary = new ApiaryRecord({id, name, controlSum, dailyNumber, startTime})
-        await newApiary.insert();
+        const {id, controlSum } = await createCheckAndInsertNewApiary(startTime, dailyNumber, name);
 
         res.render('add/added', {
             name,
