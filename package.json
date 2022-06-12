@@ -1,6 +1,6 @@
 {
   "name": "appiary_api",
-  "version": "0.3.1",
+  "version": "1.0.0",
   "description": "",
   "main": "index.ts",
   "scripts": {

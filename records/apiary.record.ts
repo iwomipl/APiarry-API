@@ -26,6 +26,7 @@ export class ApiaryRecord {
         this.controlSum = controlSum;
     }
 
+    // validating data from request
     static _validate(name: string, dailyNumber: string, startTime: string): Boolean{
         if ((dailyNumber).toString().length <5 || (dailyNumber).toString().length >5|| isNaN(Number(dailyNumber))){
             throw new ValidationError('Sorry, Your number should be digits only and be  5 digits long.');
@@ -51,11 +52,15 @@ export class ApiaryRecord {
     //Get list of all apiaries
     static async listAll(dateFrom?: string, dateTo?: string): Promise<ApiaryRecord[]> {
         const [results] = await pool.execute('SELECT * FROM `apiaries`', ) as ApiaryRecordResults;
+
+        //Map result from db and change their dates
         const mappedResults = results.map(apiary=> new ApiaryRecord({
             ...apiary,
             startTime: new Date(apiary.startTime).toLocaleDateString('sv'),
             dailyNumber: apiary.dailyNumber ,
         }));
+
+        //If we have a dates in arguments, we're filtering them to fit demands
         if (dateFrom || dateTo){
             return mappedResults.filter(apiary=> {
                 return (new Date(apiary.startTime) >= new Date(dateFrom) && new Date(apiary.startTime) <= new Date(dateTo))
@@ -69,6 +74,7 @@ export class ApiaryRecord {
                 id: controlSum,
         }) as ApiaryRecordResults;
 
+        //if id exists, and has length more than 0 send true, else send false
         return results.length >0;
     }
 
@@ -76,9 +82,14 @@ export class ApiaryRecord {
         const [results] = await pool.execute('SELECT `dailyNumber` FROM `apiaries` WHERE `startTime`= :date ORDER BY `dailyNumber` ASC', {
             date:   date.toLocaleDateString('sv'),
         }) as ApiaryRecordResults;
+
+        //first sort array by dailyNumber
         const arrayOfNums = results.map(elem=> Number(elem.dailyNumber)).sort((a, b)=> a-b);
+
+        //than find first consecutive number, so if numbers are 00001, 00002, 00004, the first consecutive number will be 00003
         const dailyNumber = getSuggestedNumberForForm(arrayOfNums);
 
+        //Yes, it's redundant usage of variable, but it's easier to read the code
         return dailyNumber;
     }
 

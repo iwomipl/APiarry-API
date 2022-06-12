@@ -6,7 +6,8 @@ export type newIdString = {
 }
 export const createApiaryIdNumber = (date: string, code: string): newIdString => {
 
-    //creating string out of string created from two strings, this must be a number, and is used in reducer function as base prev value
+    //creating string out of string created from two strings.
+    // This must be a number, and is used in reducer function as base prev value.
     const concatStringOfNumbers = date+code;
 
     if (!isNaN(Number(concatStringOfNumbers))){
