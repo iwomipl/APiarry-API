@@ -17,11 +17,12 @@ export const validateDatesFromAndTo =(dateFrom: string, dateTo: string): void=>{
 export const createCheckAndInsertNewApiary = async (startTime: string, dailyNumber: string, name: string): Promise<ApiaryRecord>=>{
     //get rid of dashes from date
     const fixDateDash = startTime.split('-').join('');
-    const {id, controlSum} = createApiaryIdNumber(fixDateDash, dailyNumber);
-
-    if (await ApiaryRecord.checkIfIdExistsInDataBase(id)){
+    if (await ApiaryRecord.checkIfIdExistsInDataBase(startTime, dailyNumber)){
         throw new ValidationError('Sorry, the Apiary number you choose was already chosen today. Try again with different number.')
     }
+
+    const {id, controlSum} = createApiaryIdNumber(fixDateDash, dailyNumber);
+
     const newApiary = new ApiaryRecord({id, name, controlSum, dailyNumber, startTime})
     await newApiary.insert();
 
