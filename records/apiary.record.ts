@@ -69,9 +69,9 @@ export class ApiaryRecord {
         return mappedResults;
     }
 
-    static async checkIfIdExistsInDataBase(controlSum: string): Promise<Boolean>{
+    static async checkIfIdExistsInDataBase(id: string): Promise<Boolean>{
         const [results] = await pool.execute('SELECT `dailyNumber` FROM `apiaries` WHERE `id`=:id', {
-                id: controlSum,
+                id,
         }) as ApiaryRecordResults;
 
         //if id exists, and has length more than 0 send true, else send false
