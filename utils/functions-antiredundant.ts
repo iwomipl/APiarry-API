@@ -15,6 +15,7 @@ export const validateDatesFromAndTo =(dateFrom: string, dateTo: string): void=>{
 }
 
 export const createCheckAndInsertNewApiary = async (startTime: string, dailyNumber: string, name: string): Promise<ApiaryRecord>=>{
+    //get rid of dashes from date
     const fixDateDash = startTime.split('-').join('');
     const {id, controlSum} = createApiaryIdNumber(fixDateDash, dailyNumber);
 

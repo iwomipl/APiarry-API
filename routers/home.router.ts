@@ -2,6 +2,7 @@ import {Router} from "express";
 import {ApiaryRecord} from "../records/apiary.record";
 import {ValidationError} from "../utils/errors";
 import {createCheckAndInsertNewApiary, validateDatesFromAndTo} from "../utils/functions-antiredundant";
+import {fillingNumberToHaveFiveDigits} from "../utils/functions";
 
 
 export const homeRouter = Router();
@@ -45,7 +46,9 @@ homeRouter
         }
     })
     .post('/add', async (req, res) => {
-        const {name, dailyNumber} = req.body;
+        let {name, dailyNumber} = req.body;
+
+        dailyNumber = dailyNumber.length < 5 ? fillingNumberToHaveFiveDigits(dailyNumber) : dailyNumber;
 
         //would have brought creating this variable to createCheckAndInsertNewApiary, but i need it to be _validated
         const startTime = new Date().toLocaleDateString('sv');
