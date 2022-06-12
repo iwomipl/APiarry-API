@@ -17,13 +17,15 @@ export const createApiaryIdNumber = (date: string, code: string): newIdString =>
     //reduce function, which multiplies everything but zeros
     const multiplyingEffect = arrayOfNumbersFromConcatNumbers.reduce((prev, curr): number => {
         if (curr !== 0) {
-            return prev * curr;
+            //I'm using toFixed here even thou it should get only natural numbers from multiplying natural numbers
+            return Number((prev * curr).toFixed());
         }
         return prev;
     }, Number(concatStringOfNumbers));
-    //in case, multiplyingEffect exceeds max number in js "9007199254740991" i used toFixed() method
-    // to get the same number as in second example
-    const stringedMultiplyingEffect = multiplyingEffect.toFixed().toString();
+
+        //in case, multiplyingEffect exceeds max number in js "9007199254740991" i used toFixed() method
+        // to get the same number as in second example
+        const stringedMultiplyingEffect = multiplyingEffect.toFixed().toString();
 
     //creating controlSum out of second, seventh and last digit of multiplyingEffect
     const controlSum = stringedMultiplyingEffect[1] + stringedMultiplyingEffect[6] + stringedMultiplyingEffect[stringedMultiplyingEffect.length - 1]
