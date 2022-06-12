@@ -1,11 +1,11 @@
 
 /**
  export const config = {
-    dbHost: '',
-    dbUser: '',
+    dbHost: 'localhost',
+    dbUser: 'root',
     dbPassword: '',
-    dbDatabase: '',
-    serverHost: '',
-    serverPort: '',
+    dbDatabase: 'saas',
+    serverHost: 'localhost',
+    serverPort: 3000,,
 };
  */
