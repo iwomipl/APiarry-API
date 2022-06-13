@@ -2,7 +2,7 @@ body{
     margin: 0;
     text-align: center;
     top: 0;
-    background-color: #eabe36;
+    background-color: #91ae70;
 }
 main{
     position: relative;
@@ -18,7 +18,7 @@ nav a {
     display: block;
     padding: 5px 10px;
     margin: 5px;
-    background: #c9ae25;
+    background: #967b12;
     border: 1px solid black;
     border-radius: 2rem;
     box-shadow: 0 0 10px black;
@@ -35,15 +35,19 @@ nav a:hover {
 }
 td {
     border: 1px solid black;
-    padding: 0 15px;
+    padding: 5px 15px;
 }
 th {
     border: 1px solid black;
+    padding: 0;
+}
+th:nth-child(n+2){
+    padding: 0 10px;
 }
 table {
     border-spacing: 0;
-    padding: 10px;
     margin: 0 auto;
+    background-color: #dec26a;
 }
 thead{
     background-color: white;
@@ -87,7 +91,7 @@ smallest{
     margin-top: -1rem;
 }
 input{
-    background-color: #eabe36;
+    background-color: #dec26a;
     color: black;
     font-weight: bolder;
     margin-bottom: 0.5rem;
