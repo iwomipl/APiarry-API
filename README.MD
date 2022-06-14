@@ -12,7 +12,7 @@ It's your choice to pick one that you prefer.
 ##After copying and starting db, it's only few steps to start the App:
 - Clone this repository;
 - Install needed dependencies "**npm i**";
-- Create "**config.ts**" file, and fill it with information of your DB and server. You can copy or rename "**config.example.ts**"; 
+- Create "**config.ts**" file, and fill it with information of your DB and server. You can copy or rename "**config.example.ts**", remember to uncomment it's content with variables; 
 - Start the application "**npm run start:dev**" or "**npm run start**".
 
 ###But why bother. 
